@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="dubbo-consumer" logger="log4j"/>
+    <dubbo:registry register="false"/>
+    <dubbo:consumer timeout="9000000" client="netty4"/>
+
+    <dubbo:reference id="userService" interface="cn.cjc.dubbo.share.UserService" url="dubbo://127.0.0.1:20880">
+        <dubbo:parameter key="heartbeat" value="9000000"/>
+    </dubbo:reference>
+    <dubbo:reference id="helloService" interface="cn.cjc.dubbo.share.HelloService" url="dubbo://127.0.0.1:20880">
+        <dubbo:parameter key="heartbeat" value="9000000"/>
+    </dubbo:reference>
+</beans>
