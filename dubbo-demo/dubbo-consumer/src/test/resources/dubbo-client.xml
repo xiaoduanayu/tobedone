@@ -11,7 +11,7 @@
         <property name="endpoint" value="http://localhost:9411/api/v2/spans"/>
     </bean>
     <bean id="tracing" class="brave.spring.beans.TracingFactoryBean">
-        <property name="localServiceName" value="zipkin-dubbo-consumer"/>
+        <property name="localServiceName" value="zipkin-dubbo-client"/>
         <property name="spanReporter">
             <bean class="zipkin2.reporter.beans.AsyncReporterFactoryBean">
                 <property name="sender" ref="sender"/>
@@ -20,18 +20,10 @@
             </bean>
         </property>
     </bean>
-    <dubbo:provider filter="tracing"/>
-    <dubbo:consumer timeout="9000000" client="netty4" filter="tracing"/>
-    <dubbo:application name="dubbo-consumer" logger="log4j"/>
+    <dubbo:application name="dubbo-client" logger="log4j"/>
     <dubbo:registry register="false"/>
-    <dubbo:protocol name="dubbo" port="20881" heartbeat="9000000" server="netty4"/>
-
-
-    <dubbo:reference id="userService" interface="cn.cjc.dubbo.share.UserService" url="dubbo://127.0.0.1:20880">
+    <dubbo:consumer timeout="9000000" client="netty4" filter="tracing"/>
+    <dubbo:reference id="helloService" interface="cn.cjc.dubbo.share.HelloService" url="dubbo://127.0.0.1:20881">
         <dubbo:parameter key="heartbeat" value="9000000"/>
     </dubbo:reference>
-    <bean id="helloService" class="cn.cjc.dubbo.consumer.impl.HelloServiceImpl">
-        <property name="userService" ref="userService"/>
-    </bean>
-    <dubbo:service interface="cn.cjc.dubbo.share.HelloService" ref="helloService"/>
 </beans>

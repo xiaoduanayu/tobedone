@@ -2,6 +2,7 @@ package cn.cjc.dubbo.provider.impl;
 
 import cn.cjc.dubbo.share.UserService;
 import cn.cjc.dubbo.share.dto.UserDTO;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.List;
  * @since 2016-07-06
  */
 public class UserServiceImpl implements UserService {
+
+    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
     private final List<UserDTO> userList = new ArrayList<>();
 
@@ -22,10 +25,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUser(Long id) {
-        System.out.println("请求开始：" + Thread.currentThread().getName());
+        LOGGER.info("请求开始：" + Thread.currentThread().getName());
         UserDTO userDTO = new UserDTO();
         userDTO.setName("陈文羽");
-        System.out.println("请求结束：" + Thread.currentThread().getName());
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        LOGGER.info("请求结束：" + Thread.currentThread().getName());
         return userDTO;
     }
 }
