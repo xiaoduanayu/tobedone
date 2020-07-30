@@ -24,10 +24,10 @@ public class StartClient {
             System.out.println("开始请求");
             String msg = helloService.sayHi("debo");
             System.out.println(msg);
+            System.out.println("结束请求，耗时" + (System.currentTimeMillis() - start) + "ms");
             System.in.read();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("结束请求，耗时" + (System.currentTimeMillis() - start) + "ms");
     }
 }
