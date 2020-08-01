@@ -1,0 +1,1 @@
+hystrix=cn.cjc.dubbo.consumer.filter.HystrixFilter
